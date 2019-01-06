@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
+<style>
+body {
+    font-family: Arial;
+    background-color: white;
+    color: black;
+}
+</style>
+</head>
+<body>
+
+<h2>Publisher</h2>
+
+<form>
+  <fieldset>	
+  Event name:<br><br>
+  <input type="text" style = "border:solid 1px black;"name="eventname" id="eventName">
+  <br><br>
+  Message:<br>
+  <p>
+      <textarea style= "width:50%; height:50%; border:solid 1px black;"  id="inputMessage" > </textarea>
+  </p>
+  
+  <button type="button" class="btn btn-success" onclick="publish()">Publish</button>
+</fieldset>
+</form>
+
+<script>
+function publish() {
+  //document.getElementById("output").value = "Hello World";
+  //document.write(input.value)
+  var event_name = document.getElementById("eventName").value;
+  var inputMessage = document.getElementById("inputMessage").value;
+  $.getJSON('http://localhost:5000/publishEvent?event='+event_name+'&message='+inputMessage,function(result, status){
+      //document.write(result)
+     if(result.output == 'SUCCESS'){
+     	window.alert('Event is Published Successfully...!');
+     };
+  });
+  $.getJSON('http://localhost:4000/publishEvent?event='+event_name+'&message='+inputMessage,function(result, status){
+      //document.write(result)
+     if(result.output == 'SUCCESS'){
+      window.alert('Event is Published Successfully...!');
+     };
+  });
+
+}
+</script>
+</body>
+</html>

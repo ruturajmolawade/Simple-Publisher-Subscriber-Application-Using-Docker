@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+body {
+    font-family: Arial;
+    background-color: white;
+    color: black;
+}
+</style>
+<head>
+<body>
+
+<h2>Subscriber</h2>
+
+<form>
+  <fieldset>	
+  Subsriber name:<br>
+  <input type="text" style = "border:solid 1px black;"name="firstname" id="subscriberName"><br><br>
+  Subsribe to event:<br>
+  <input type="text" style = "border:solid 1px black;"name="firstname" id="eventName">
+  <br><br>
+  <button type="button" class="btn btn-success" onclick="subscribe()">Subscribe</button>
+</fieldset>
+</form>
+<br><br>
+<form>
+<fieldset>
+<button type="button" class="btn btn-success" onclick="refresh()">Refresh</button><br><br> 
+Message:<br>
+<p>
+<textarea style= "width:50%; height:50%; border:solid 1px black;"  id="output" readonly=true> </textarea>
+</p>
+</fieldset> 
+</form>
+
+<script>
+function subscribe() {
+  //document.getElementById("output").value = "Hello World";
+  //document.write(input.value)
+  var event_name = document.getElementById("eventName").value;
+  var subscriberName = document.getElementById("subscriberName").value;
+  $.getJSON('http://localhost:4000/subscribeToEvent?event='+event_name+'&name='+subscriberName,function(result, status){
+      //document.write(result)
+      //document.getElementById("output").value = result.message_out;
+      if(result.output == 'SUCCESS'){
+      window.alert('Registered to an event Successfully...!');
+     };
+  });
+
+};
+function refresh(){
+  var event_name = document.getElementById("eventName").value;
+  var subscriberName = document.getElementById("subscriberName").value;
+  $.getJSON('http://localhost:4000/subscribeToEvent?event='+event_name+'&name='+subscriberName,function(result, status){
+      //document.write(result)
+      document.getElementById("output").value = result.message_out;
+  });
+}
+</script>
+
+</body>
+</html>
